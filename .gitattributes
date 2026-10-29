@@ -1,0 +1,4 @@
+# Highlight the hardware implementation in GitHub's language breakdown.
+*.v linguist-language=Verilog linguist-detectable=true
+cpp/** linguist-detectable=false
+target/** linguist-generated=true
