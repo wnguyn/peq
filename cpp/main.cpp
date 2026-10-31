@@ -7,20 +7,19 @@
 
 
 
-// i don't know what this does lol
-static void tick(Vpeq& circuit)
+void tick(Vpeq* circuit)
 {
-    circuit.clk = 0;
-    circuit.eval();
-    circuit.clk = 1;
-    circuit.eval();
+    circuit->clk = 0;
+    circuit->eval();
+    circuit->clk = 1;
+    circuit->eval();
 }
 
-int main(int argc, char** argv)
+auto main(int argc, char** argv) -> int
 {
     VerilatedContext context;
     context.commandArgs(argc, argv);
-    Vpeq dut{&context};
+    // Vpeq dut{&context};
 
     // random thing that i ffmpeg into raw pcm
     std::ifstream input("input.pcm", std::ios::binary);
@@ -34,7 +33,6 @@ int main(int argc, char** argv)
     dut.rst = 0;
 
 
-    // this is little endian i think.. if only rust you can just do u16::from_le or whatever
     char bytes[2];
     while (input.read(bytes, sizeof(bytes)))
     {
