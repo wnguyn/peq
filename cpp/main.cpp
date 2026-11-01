@@ -7,21 +7,20 @@
 
 
 
-void tick(Vpeq* circuit)
+void tick(Vpeq& circuit)
 {
-    circuit->clk = 0;
-    circuit->eval();
-    circuit->clk = 1;
-    circuit->eval();
+    circuit.clk = 0;
+    circuit.eval();
+    circuit.clk = 1;
+    circuit.eval();
 }
 
-auto main(int argc, char** argv) -> int
+int main(int argc, char** argv)
 {
     VerilatedContext context;
     context.commandArgs(argc, argv);
-    // Vpeq dut{&context};
+    Vpeq dut{&context};
 
-    // random thing that i ffmpeg into raw pcm
     std::ifstream input("input.pcm", std::ios::binary);
     std::ofstream output("output.pcm", std::ios::binary);
 
@@ -36,8 +35,8 @@ auto main(int argc, char** argv) -> int
     char bytes[2];
     while (input.read(bytes, sizeof(bytes)))
     {
-        dut.sample_in = static_cast<std::uint8_t>(bytes[0]) |
-                        (static_cast<std::uint8_t>(bytes[1]) << 8);
+        dut.sample_in = std::static_cast<std::uint8_t>(bytes[0]) |
+                        (std::static_cast<std::uint8_t>(bytes[1]) << 8);
         dut.sample_valid = 1;
         tick(dut);
         if (!dut.sample_out_valid)
