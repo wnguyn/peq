@@ -4,3 +4,5 @@
 *.vcd
 *.fst
 /Makefile
+
+/peq/rs/target/
