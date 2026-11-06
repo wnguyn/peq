@@ -3,3 +3,4 @@
 /*.pcm
 *.vcd
 *.fst
+/Makefile

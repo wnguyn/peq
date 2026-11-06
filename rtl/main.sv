@@ -3,7 +3,7 @@ module i2s_pcm (
     input wire bclk,
     input wire lrclk,
     input wire sdata,
-    input wire rst,
+    input wire rst, // random reset wire lol
 
     output reg signed [15:0] x0, // x[n]
     output reg signed [15:0] x1, // x[n-1]
@@ -15,7 +15,10 @@ module i2s_pcm (
     reg [4:0] bit_count;
     reg [15:0] shift_reg;
 
+
+    // get x[n], x[n-1], x[n-2]
     always @(posedge bclk) begin
+        // debug thing?
         if (rst) begin
             lrclk_d1 <= 0;
             lrclk_d2 <= 0;
@@ -47,6 +50,15 @@ module i2s_pcm (
                 end
             end
         end
+    end
+    // if sample_valid we take the PCM samples through 8 times 
+    always @(posedge bclk) begin
+        if (sample_valid) begin
+            sample_valid <= 0; //
+        end
+        
+
+
     end
 
 endmodule
