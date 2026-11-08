@@ -1,21 +1,36 @@
-use clap::*;
-use std::{fs, io};
-// make stupid cli later???
+use std::fs::read_to_string;
 
 struct Band {
-    b0: f32,
-    b1: f32,
-    b2: f32,
-    a1: f32,
-    a2: f32,
+    q: f32,
 }
 impl Band {
-    fn new(str: String) -> Vec<Band> {
-        // do something???
+    fn new(contents: String) -> Vec<Band> {
+        let mut bands = Vec::new();
+
+        for line in contents.lines() {
+            let mut words = line.split_whitespace();
+            if words.next() != Some("Filter") {
+                continue;
+            }
+
+            let q = words
+                .skip_while(|word| *word != "Q")
+                .nth(1)
+                .unwrap()
+                .parse::<f32>()
+                .unwrap();
+
+            bands.push(Band { q });
+        }
+
+        bands
     }
 }
 
-fn main() -> io::Result<()> {
-    let contents = std::fs::read_to_string("foo.txt")?;
-    let foo: Vec<Band> = Band::new(contents);
+fn main() {
+    let contents = read_to_string("foo.txt").unwrap();
+    let bands: Vec<Band> = Band::new(contents);
+    for band in bands {
+        println!("{}", band.q);
+    }
 }
