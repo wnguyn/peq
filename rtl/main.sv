@@ -8,6 +8,9 @@ module i2s_pcm (
     output reg signed [15:0] x0, // x[n]
     output reg signed [15:0] x1, // x[n-1]
     output reg signed [15:0] x2, // x[n-2]
+
+    output reg signed [15:0] y1,
+    output reg signed [15:0] y2,
     output reg sample_valid
 );
 
@@ -55,6 +58,7 @@ module i2s_pcm (
     always @(posedge bclk) begin
         if (sample_valid) begin
             sample_valid <= 0; //
+                        
         end
         
 
@@ -62,3 +66,9 @@ module i2s_pcm (
     end
 
 endmodule
+
+
+
+module i2s_out {
+    
+}

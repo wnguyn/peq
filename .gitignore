@@ -5,4 +5,5 @@
 *.fst
 /Makefile
 
-/peq/rs/target/
+/rs/target/
+/rs/src/target/
